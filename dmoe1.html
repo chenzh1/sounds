@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		  if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+
+    
+        AVAudioSessionRecordPermission permissionStatus = [[AVAudioSession sharedInstance] recordPermission];
+        
+        switch (permissionStatus) {
+            case AVAudioSessionRecordPermissionUndetermined:{
+                NSLog(@"第一次调用，是否允许麦克风弹框");
+                [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
+                    // CALL YOUR METHOD HERE - as this assumes being called only once from user interacting with permission alert!
+                    if (granted) {
+                        // Microphone enabled code
+                        console.log(1)
+                    }
+                    else {
+                        // Microphone disabled code
+                        console.log(2)
+                    }
+                }];
+                break;
+            }
+            case AVAudioSessionRecordPermissionDenied:
+                // direct to settings...
+                NSLog(@"已经拒绝麦克风弹框");
+
+                break;
+            case AVAudioSessionRecordPermissionGranted:
+                NSLog(@"已经允许麦克风弹框");
+                // mic access ok...
+                break;
+            default:
+                // this should not happen.. maybe throw an exception.
+                break;
+        }
+        if(permissionStatus == AVAudioSessionRecordPermissionUndetermined) return;
+    }
+	</script>
+</body>
+</html>
