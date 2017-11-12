@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<script src="jq.js"></script>
+	<script src="weixin.js"></script>
+</head>
+<style type="text/css" media="screen">
+	#record{
+		position: absolute;
+		top:100px;
+		width: 100px;
+		height: 100px;
+		background: red;
+	}
+	#records{
+		position: absolute;
+		top:300px;
+		width: 100px;
+		height: 100px;
+		background: red;
+	}
+</style>
+<body>
+	<div id="record">点击</div>
+	<div id="records">点击</div>
+	<script>
+		var btnRecord = $('#record');
+		$("#records").on("click",function(){
+			wx.startRecord({
+            success: function(res) {
+                alert(res)
+            },
+            cancel: function() {
+                alert('用户拒绝授权录音');
+            }
+        });
+		})
+        wx.stopRecord({
+            success: function(res) {
+                alert("结束录音")
+                localId = res.localId;
+                // 上传到服务器
+                alert("结束")
+                uploadVoice();
+            },
+            fail: function(res) {
+                alert(JSON.stringify(res));
+            }
+        });
+	</script>
+</body>
+</html>
